@@ -69,7 +69,7 @@ class ContatoController {
         if (!telefoneRegex.test(telefone)) {
           return res.status(400).json({ error: "Telefone deve estar no formato (xx) xxxxx-xxxx" });
         }
-        // Check for duplicate telefone before updating
+        
         const telefoneExistente = await Contato.findOne({ where: { telefone } });
         if (telefoneExistente && telefoneExistente.id !== contato.id) {
           return res.status(400).json({ error: "Telefone já cadastrado" });
