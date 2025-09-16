@@ -1,0 +1,15 @@
+{
+  "name": "portlouis",
+  "version": "1.0.0",
+  "description": "PortLouis é um sistema de gerenciamento de contatos desenvolvido com uma arquitetura full-stack. O backend é construído com Node.js e Express, utilizando Sequelize para interação com um banco de dados MySQL. O frontend é uma aplicação Vue.js com Vuetify para uma interface moderna e responsiva.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
+}

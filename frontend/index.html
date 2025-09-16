@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Gerenciador de Contatos</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@3.3.2/dist/vuetify.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@3.3.2/dist/vuetify.min.js"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #6b73ff 0%, #000dff 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    v-app-bar {
+      background-color: #1a237e !important;
+    }
+    v-btn {
+      font-weight: bold;
+    }
+    v-card {
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    }
+    v-card-text strong {
+      color: #bbdefb;
+    }
+    v-card-actions v-btn {
+      min-width: 80px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <v-app>
+      <v-app-bar color="primary" dark app>
+        <v-toolbar-title>📞 Gerenciador de Contatos</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn @click="abrirModalCriar = true">+ Adicionar</v-btn>
+      </v-app-bar>
+      <v-container class="mt-16">
+        
+
+        <v-row>
+          <v-col cols="12" md="6" lg="6" v-for="contato in contatos" :key="contato.id">
+            <v-card elevation="4" class="pa-4">
+              <v-card-text>
+                <v-row>
+                  <v-col cols="6">
+                    <strong>Nome:</strong> {{ contato.nome }}
+                  </v-col>
+                  <v-col cols="6">
+                    <strong>Telefone:</strong>
+                    <span :style="{ color: contato.telefone.startsWith('(11)') ? 'lightblue' : 'inherit' }">
+                      {{ contato.telefone }}
+                    </span>
+                  </v-col>
+                </v-row>
+              </v-card-text>
+              <v-card-actions>
+                <v-btn small color="blue" class="mr-2" @click="editar(contato)">Editar</v-btn>
+                <v-btn small color="red" @click="excluir(contato.id)">Excluir</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+        </v-row>
+        
+        <v-dialog v-model="abrirModalCriar" width="400">
+          <v-card>
+            <v-card-title>Adicionar Contato</v-card-title>
+            <v-card-text>
+              <v-text-field v-model="novoContato.nome" label="Nome"></v-text-field>
+              <v-text-field v-model="novoContato.telefone" label="Telefone (xx) xxxx-xxxx"></v-text-field>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn color="primary" :disabled="!validarContato(novoContato)" @click="salvarContato">Salvar</v-btn>
+              <v-btn @click="abrirModalCriar = false">Cancelar</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        
+        <v-dialog v-model="abrirModalEditar" width="400">
+          <v-card>
+            <v-card-title>Editar Contato</v-card-title>
+            <v-card-text>
+              <v-text-field v-model="contatoEditando.nome" label="Nome"></v-text-field>
+              <v-text-field v-model="contatoEditando.telefone" label="Telefone (xx) xxxxx-xxxx"></v-text-field>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn color="primary" :disabled="!validarContato(contatoEditando)" @click="atualizarContato">Atualizar</v-btn>
+              <v-btn @click="abrirModalEditar = false">Cancelar</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-container>
+    </v-app>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
